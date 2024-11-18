@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useCallback } from "react";
 import Image from "next/image";
 import { ImageData } from "./ImageData";
@@ -16,35 +17,37 @@ const Polaroid = ({ src, alt, caption, date }: ImageData) => {
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
 
-      const targetX = x;
-      const targetY = y;
-      const currentX = mousePosition.x;
-      const currentY = mousePosition.y;
-
-      setMousePosition({
-        x: currentX + (targetX - currentX) * 0.2,
-        y: currentY + (targetY - currentY) * 0.2,
-      });
+      setMousePosition({ x, y });
     },
-    [isHovered, mousePosition]
+    [isHovered]
   );
 
-  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+    setIsHovered(true);
+
+    // Dynamically set mousePosition based on cursor entry
+    const element = e.currentTarget;
+    const rect = element.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+
+    setMousePosition({ x, y }); // Start the light at the cursor entry point
+  };
+
   const handleMouseLeave = () => {
     setIsHovered(false);
-    setMousePosition({ x: 0.5, y: 0.5 }); // Reset to center
   };
 
   // Light reflection effect
   const lightStyle = {
     background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, 
-      rgba(255, 255, 255, 0.3) 0%, 
-      rgba(255, 255, 255, 0.1) 30%, 
+      rgba(255, 255, 255, 0.25) 0%, 
+      rgba(255, 255, 255, 0.1) 40%, 
       rgba(255, 255, 255, 0) 70%)`,
     position: "absolute" as const,
     inset: 0,
     pointerEvents: "none" as const,
-    transition: "opacity 0.6s ease-out, background 0.3s ease-out", // Smooth opacity and background transition
+    transition: isHovered ? "opacity 0.3s ease-in, background 0.3s ease-in" : "opacity 0.6s ease-out", // Smooth transitions
     borderRadius: "inherit",
     opacity: isHovered ? 1 : 0, // Gradual appearance/disappearance
   };
@@ -66,7 +69,7 @@ const Polaroid = ({ src, alt, caption, date }: ImageData) => {
       }}
     >
       {/* Image */}
-      <Image src={src} alt={alt} width={240} height={240} className="rounded-sm" />
+      <Image src={src} alt={alt} width={240} height={240} draggable={false} className="rounded-sm" />
 
       {/* Light Reflection */}
       <div style={lightStyle} />

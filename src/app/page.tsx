@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useCallback } from "react";
 import Polaroid from "./components/Polaroid";
 import { images } from "./components/ImageData";
