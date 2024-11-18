@@ -47,7 +47,7 @@ function Polaroid({ src, alt, caption, date }: ImageData) {
       <div className="bg-gray-200 p-2 rounded-lg">
         <Image src={src} alt={alt} width={240} height={240} className="rounded-lg" />
       </div>
-      {caption && <p className="mt-2 text-sm font-semibold text-gray-800">{caption}</p>}
+      {caption && <p className="mt-2 text-sm text-gray-800">{caption}</p>}
       {date && <p className="text-xs text-gray-500 mt-1">{date}</p>}
     </div>
   );
