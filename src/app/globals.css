@@ -15,7 +15,22 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: #212121;
+  text-shadow: 0.2px 0.2px 0.25px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.6px;
   font-family: var(--font-big-bird);
+}
+
+.date {
+  color: rgba(33, 33, 33, 0.40);
+  text-shadow: 0.2px 0.2px 0.25px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.6px;
+}
+
+.shadow-inner {
+  box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.25);
+}
+
+.polaroid {
+  box-shadow: inset 10px 10px 20px 0 rgba(37, 40, 109, 0.4);
 }
